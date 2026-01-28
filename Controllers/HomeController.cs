@@ -47,20 +47,26 @@ namespace AzureP33.Controllers
                     viewModel.ErrorResponse = JsonSerializer.Deserialize<TranslatorErrorResponse>(result);
                 }
 
-                if (viewModel.Items != null && viewModel.Items.Count > 0)
+                if (viewModel.Items != null)
                 {
-                    var history = new TranslationHistory
+                    var historyItem = new TranslationHistory
                     {
                         CreatedAt = DateTime.UtcNow,
                         UserId = User.Identity?.Name,
-                        OriginalText = formModel.OriginalText,
+                        OriginalText = formModel!.OriginalText,
                         OriginalLanguage = formModel.LangFrom,
                         TranslatedText = viewModel.Items[0].Translations[0].Text,
-                        TranslatedLanguage = formModel.LangTo
+                        TranslatedLanguage = formModel.LangTo,
+                        OriginalTransliteration = viewModel.FromTransliteration?.Text,
+                        OriginalScript = viewModel.FromTransliteration?.Script,
+                        TranslatedTransliteration = viewModel.ToTransliteration?.Text,
+                        TranslatedScript = viewModel.ToTransliteration?.Script
                     };
-                    _dbContext.TranslationHistories.Add(history);
+
+                    _dbContext.TranslationHistories.Add(historyItem);
                     await _dbContext.SaveChangesAsync();
                 }
+
             }
 
             viewModel.LanguagesResponse = await respTask;
