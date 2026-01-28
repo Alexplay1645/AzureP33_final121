@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ????????? Azure Translator
 builder.Configuration.AddJsonFile("azuresettings.json");
 
-// EF Core - ??????????? ? SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
