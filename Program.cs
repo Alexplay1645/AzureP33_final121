@@ -1,37 +1,34 @@
+using AzureP33.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-try
-{
-    builder.Configuration.AddJsonFile("azuresettings.json");
-}
-catch
-{
-    Console.WriteLine("Not Found file(s): azuresettings.json\nAre you read README?");
-    return;
-}
+// ????????? Azure Translator
+builder.Configuration.AddJsonFile("azuresettings.json");
 
-// Add services to the container.
+// EF Core - ??????????? ? SQL Server
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();

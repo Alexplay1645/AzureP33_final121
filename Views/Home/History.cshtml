@@ -1,0 +1,30 @@
+﻿@model List<AzureP33.Models.TranslationHistory>
+
+<h2>Історія перекладів</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Користувач</th>
+            <th>Оригінал (мова)</th>
+            <th>Переклад (мова)</th>
+            <th>Транслитерації</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var h in Model)
+        {
+            <tr>
+                <td>@h.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@h.UserId</td>
+                <td>@h.OriginalText (@h.OriginalLanguage)</td>
+                <td>@h.TranslatedText (@h.TranslatedLanguage)</td>
+                <td>
+                    From: @h.OriginalTransliteration (@h.OriginalScript) <br />
+                    To: @h.TranslatedTransliteration (@h.TranslatedScript)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
