@@ -12,10 +12,8 @@ namespace AzureP33.Data
         {
         }
 
-        // Таблица для истории переводов
         public DbSet<TranslationHistory> TranslationHistories { get; set; } = null!;
 
-        // Переопределяем SaveChangesAsync (можно добавлять логирование)
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await base.SaveChangesAsync(cancellationToken);
