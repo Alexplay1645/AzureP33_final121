@@ -1,6 +1,5 @@
-﻿using AzureP33.Models;
+using AzureP33.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,9 +7,7 @@ namespace AzureP33.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<TranslationHistory> TranslationHistories { get; set; } = null!;
 
